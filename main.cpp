@@ -62,13 +62,13 @@ DEPENDENCIES:
 		a. A handy C++ library that adds a lot of nice features
 		b. Download Link: http://www.boost.org/users/download/
 	
+	5. Eigen
+		a. This provides matrix math implementations for C++
+		b. https://github.com/eigenteam/eigen-git-mirror
+
 	4. Thor_STM32
 		a. Primary driver for peripherals that build on top of the HAL library
 		b. https://github.com/brandonbraun653/Thor_STM32
-
-	5. 
-
-
 
 */
 
@@ -77,12 +77,11 @@ DEPENDENCIES:
 #include "task.h"
 
 /* Thor Includes */
-
 #include "Thor/include/thor.h"
 
-// #ifdef DEBUG
-// #include "SysprogsProfiler.h"
-// #endif
+#ifdef DEBUG
+#include "SysprogsProfiler.h"
+#endif
 
 /* Thread Task Includes */
 // #include "fcsConfig.hpp"
