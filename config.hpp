@@ -16,8 +16,8 @@
 * Task Update Frequencies/Constants
 *----------------------------*/
 #define STATUS_LED_UPDATE_FREQ_HZ	5		
-#define CONSOLE_UPDATE_FREQ_HZ		100	
-#define SENSOR_UPDATE_FREQ_HZ		250		
+#define CONSOLE_UPDATE_FREQ_HZ		50
+#define SENSOR_UPDATE_FREQ_HZ		150		
 #define AHRS_UPDATE_RATE_MULTIPLIER	5		/* AHRS will have an effective update at X multiple of SENSOR_UPDATE_FREQ_HZ (x5) */
 
 /*-----------------------------

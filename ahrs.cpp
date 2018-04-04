@@ -172,8 +172,10 @@ namespace SOAR_AHRS
 			*---------------------------*/
 			/* Update Accel & Gyro Data at whatever frequency set by user. Max bandwidth on
 			* chip is 952Hz which will saturate FreeRTOS if sampled that often.*/
+			//taskENTER_CRITICAL();
 			imu.readAccel();
 			imu.readGyro();
+			
 
 			/* Update Mag Data at a max frequency set by LSM9DS1_M_MAX_BW (~75Hz) */
 			#if (SENSOR_UPDATE_FREQ_HZ > LSM9DS1_M_MAX_BW)
@@ -189,9 +191,24 @@ namespace SOAR_AHRS
 			imu.readMag();
 			imu.calcMag();
 			#endif
+			//taskEXIT_CRITICAL();
 
 			/* Convert raw data from chip into meaningful data */
 			imu.calcAccel(); imu.calcGyro();
+
+// 			#ifdef DEBUG
+// 			ax = imu.aRaw[0];
+// 			ay = imu.aRaw[1];
+// 			az = imu.aRaw[2];
+// 
+// 			gx = imu.gRaw[0];
+// 			gy = imu.gRaw[1];
+// 			gz = imu.gRaw[2];
+// 
+// 			mx = imu.mRaw[0];
+// 			my = imu.mRaw[1];
+// 			mz = imu.mRaw[2];
+// 			#endif
 
 			accel_raw << imu.aRaw[0], imu.aRaw[1], imu.aRaw[2];
 			gyro_raw << imu.gRaw[0], imu.gRaw[1], imu.gRaw[2];
@@ -253,13 +270,12 @@ namespace SOAR_AHRS
 			mz = mag_filtered(2);
 			#endif
 
-
-			/* Send data over to the PID thread*/
-// 			if (xSemaphoreTake(ahrsBufferMutex, 0) == pdPASS)
-// 			{
-// 				xQueueOverwrite(qAHRS, &ahrsData);
-// 				xSemaphoreGive(ahrsBufferMutex);
-// 			}
+			/* Send data over to the Serial thread*/
+			if (xSemaphoreTake(ahrsBufferMutex, 0) == pdPASS)
+			{
+				xQueueOverwrite(qAHRS, &ahrsData);
+				xSemaphoreGive(ahrsBufferMutex);
+			}
 
 			vTaskDelayUntil(&lastTimeWoken, pdMS_TO_TICKS(updateRate_mS));
 		}

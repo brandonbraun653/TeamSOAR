@@ -137,7 +137,7 @@ void init(void* parameter)
 	while (!ulTaskNotifyTake(pdTRUE, 0))
 		vTaskDelayUntil(&lastTimeWoken, pdMS_TO_TICKS(10));
 
-	error = xTaskCreate(SOAR_SERIAL::serialTask, "serialTask", 500, NULL, STATUS_LEDS_PRIORITY, &TaskHandle[SERIAL_TASK]);
+	error = xTaskCreate(SOAR_SERIAL::serialTask, "serialTask", 1000, NULL, STATUS_LEDS_PRIORITY, &TaskHandle[SERIAL_TASK]);
 	while (!ulTaskNotifyTake(pdTRUE, 0))
 		vTaskDelayUntil(&lastTimeWoken, pdMS_TO_TICKS(10));
 
@@ -166,6 +166,7 @@ void init(void* parameter)
 	vTaskResume(TaskHandle[LED_STATUS_TASK]);
 	vTaskResume(TaskHandle[SERIAL_TASK]);
 	vTaskResume(TaskHandle[AHRS_TASK]);
+	
 
 	/* Ensure a clean deletion of the task upon exit */
 	TaskHandle[INIT_TASK] = (void*)0;	//Deletes our personal log of this task's existence

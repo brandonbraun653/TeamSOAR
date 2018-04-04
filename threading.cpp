@@ -1,6 +1,7 @@
 #include "threading.hpp"
 
-
+QueueHandle_t qAHRS = xQueueCreate(1, sizeof(AHRSData_t));
+SemaphoreHandle_t ahrsBufferMutex = xSemaphoreCreateMutex();
 
 boost::container::vector<void*> TaskHandle(TOTAL_TASK_SIZE);
 

@@ -12,14 +12,13 @@
 #include "semphr.h"
 
 /* Project Includes */
+#include "dataTypes.hpp"
 
 
 /*----------------------------------
 * Queues
 *----------------------------------*/
-extern QueueHandle_t qIMU;
-extern QueueHandle_t qAHRS;		
-extern QueueHandle_t qSERIAL;
+extern QueueHandle_t qAHRS;
 
 
 /*----------------------------------
